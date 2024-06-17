@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [previousPage, setPreviousPage] = useState(null);
   const [itemsPerPage] = useState(10);
   const [error, setError] = useState(null);
 
@@ -26,23 +27,25 @@ const EmployeeTable = () => {
     return <div>{error}</div>;
   }
 
-  const indexOfLastEmployee = currentPage * itemsPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
-  const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
-
   const totalPages = Math.ceil(employees.length / itemsPerPage);
 
   const handleClickPrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (previousPage !== null) {
+      setCurrentPage(previousPage);
+      setPreviousPage(previousPage - 1);
     }
   };
 
   const handleClickNext = () => {
     if (currentPage < totalPages) {
+      setPreviousPage(currentPage);
       setCurrentPage(currentPage + 1);
     }
   };
+
+  const indexOfLastEmployee = currentPage * itemsPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
+  const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
   return (
     <div>
