@@ -18,8 +18,10 @@ const EmployeeTable = () => {
       .catch(error => {
         console.error('Error fetching data:', error);
         setError('Failed to fetch data');
+        alert('Failed to fetch data');
       });
   }, []);
+  
 
   if (error) {
     return <div>{error}</div>;
@@ -31,15 +33,15 @@ const EmployeeTable = () => {
 
   const totalPages = Math.ceil(employees.length / itemsPerPage);
 
-  const handleClickPrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   const handleClickNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+    }
+  };
+  
+  const handleClickPrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
