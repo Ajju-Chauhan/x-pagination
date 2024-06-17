@@ -8,7 +8,12 @@ const EmployeeTable = () => {
 
   useEffect(() => {
     fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        return response.json();
+      })
       .then(data => setEmployees(data))
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -41,11 +46,8 @@ const EmployeeTable = () => {
   return (
     <div>
       <table>
-        <thead >
-          <tr style={{
-            backgroundColor: "green",
-            width : "100%"
-        }}>
+        <thead>
+          <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
@@ -67,7 +69,7 @@ const EmployeeTable = () => {
         <button onClick={handleClickPrevious} disabled={currentPage === 1}>
           Previous
         </button>
-        <span>{currentPage}</span>
+        <span> Page {currentPage} of {totalPages} </span>
         <button onClick={handleClickNext} disabled={currentPage === totalPages}>
           Next
         </button>
