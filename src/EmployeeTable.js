@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +46,7 @@ const EmployeeTable = () => {
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
   return (
-    <div>
+    <div className="table-container">
       <table>
         <thead>
           <tr>
@@ -66,11 +67,11 @@ const EmployeeTable = () => {
           ))}
         </tbody>
       </table>
-      <div>
+      <div className="pagination-controls">
         <button onClick={handleClickPrevious} disabled={currentPage === 1}>
           Previous
         </button>
-        <span> Page {currentPage} of {totalPages} </span>
+        <span className="pagination-info">{currentPage}</span>
         <button onClick={handleClickNext} disabled={currentPage === totalPages}>
           Next
         </button>
