@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from "react";
 
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
@@ -8,18 +7,20 @@ const EmployeeTable = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
-      .then(response => {
+    fetch(
+      "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+    )
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         return response.json();
       })
-      .then(data => setEmployees(data))
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setError('Failed to fetch data');
-        alert('Failed to fetch data');
+      .then((data) => setEmployees(data))
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data");
+        alert("Failed to fetch data");
       });
   }, []);
 
@@ -43,7 +44,10 @@ const EmployeeTable = () => {
 
   const indexOfLastEmployee = currentPage * itemsPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
-  const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+  const currentEmployees = employees.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee
+  );
 
   return (
     <div className="table-container">
@@ -57,7 +61,7 @@ const EmployeeTable = () => {
           </tr>
         </thead>
         <tbody>
-          {currentEmployees.map(employee => (
+          {currentEmployees.map((employee) => (
             <tr key={employee.id}>
               <td>{employee.id}</td>
               <td>{employee.name}</td>
@@ -68,13 +72,9 @@ const EmployeeTable = () => {
         </tbody>
       </table>
       <div className="pagination-controls">
-        <button onClick={handleClickPrevious} disabled={currentPage === 1}>
-          Previous
-        </button>
+        <button onClick={handleClickPrevious}>Previous</button>
         <span className="pagination-info">{currentPage}</span>
-        <button onClick={handleClickNext} disabled={currentPage === totalPages}>
-          Next
-        </button>
+        <button onClick={handleClickNext}>Next</button>
       </div>
     </div>
   );
